@@ -50,4 +50,19 @@ public class MinhaPilha {
         nElementos=0;
     }
 
+    //método criado para facilitar a representação das pilhas na atividade
+    //Talvez dê para ser implementado em outro local
+    public String hanoi(){
+        String hanoi ="";
+        for (int i=0;i<size();i++){
+            if(i!=size()-1){
+                hanoi+= " ".repeat(size()-i)+"["+"-".repeat(i)+pilha[i]+"-".repeat(i)+"]\n";
+            }
+            else{
+                hanoi+= " ".repeat(size()-i)+"["+"-".repeat(i)+pilha[i]+"-".repeat(i)+"]";
+            }
+        }
+        return hanoi;
+    }
+
 }
