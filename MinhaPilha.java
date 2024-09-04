@@ -23,6 +23,7 @@ public class MinhaPilha {
     //pop(): remove e retorna o elemento do topo da pilha (erro se a pilha estiver vazia)
     public int pop(){
         int result=top();
+        pilha[nElementos-1]=0;//linha adicionada ao código original para auxiliar na representação da torre
         nElementos--;
         return result;
     }
@@ -63,6 +64,10 @@ public class MinhaPilha {
             }
         }
         return hanoi;
+    }
+    //método criado para retornar o elemento em cada indice da pilha
+    public int elemento(int indice){
+        return pilha[indice];
     }
 
 }
