@@ -55,8 +55,6 @@ class AutoApp{
                     case 1:
                         segMenorT=achaSegundoMenor(torre2,torre3);
                         maior=achaMaior(torre2, torre3);
-                        // lista[maior].push(lista[segMenorT].top());
-                        // lista[segMenorT].pop();
                         if(localizaTorre(torre1, torre2, torre3, segMenorT)==3){
                             torre3.push(torre2.top());
                             torre2.pop();
@@ -69,8 +67,6 @@ class AutoApp{
                     case 2:
                         segMenorT=achaSegundoMenor(torre1,torre3);
                         maior=achaMaior(torre1, torre3);
-                        // lista[maior].push(lista[segMenorT].top());
-                        // lista[segMenorT].pop();
                         if(localizaTorre(torre1, torre2, torre3, segMenorT)==3){
                             torre1.push(torre3.top());
                             torre3.pop();
@@ -83,8 +79,6 @@ class AutoApp{
                     case 3:
                         segMenorT=achaSegundoMenor(torre2,torre1);
                         maior=achaMaior(torre2, torre1);
-                        // lista[maior].push(lista[segMenorT].top());
-                        // lista[segMenorT].pop();
                         if(localizaTorre(torre1, torre2, torre3, segMenorT)==2){
                             torre1.push(torre2.top());
                             torre2.pop();
