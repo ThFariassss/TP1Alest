@@ -26,8 +26,10 @@ class AutoApp{
         int torreMenorDisco=torreInicial;
         int proxTorreMenorD=torreInicial+1;
         boolean menorMoveu=false;
-        String espera;
 
+        //demais variáveis que podem ser utilizadas
+        int torreSegMenorD=torreInicial;
+        int segMenorD=2;
         //Preenchendo a torre inicial
         for(int i=quantDiscos; i>=1; i--){
             switch(torreInicial){
@@ -50,7 +52,7 @@ class AutoApp{
             System.out.println("Rodada "+r+"\nAperte ENTER para continuar");
             teclado.nextLine();
             if(menorMoveu){
-                System.out.print("Falta implementar\n");
+                //Aqui
                 menorMoveu=false;
             }
             else{
@@ -101,5 +103,19 @@ class AutoApp{
         }
         System.out.print("Acabou "+fim);
         teclado.close();
+    }
+    public static MinhaPilha localizaTorre(MinhaPilha torre1,MinhaPilha torre2,MinhaPilha torre3, int discoX){
+        if(torre1.top()==discoX){
+            return torre1;
+        }
+        else{
+            if(torre2.top()==discoX){
+                return torre2;
+            }
+            else{
+                return torre3;
+            }
+        }
+        
     }
 }
