@@ -3,6 +3,7 @@
  */
 import java.util.Scanner;
 public class App {
+    private static int numJogadas=1;
     public static void main(String[] args) {
         Scanner teclado =new Scanner (System.in);
         int discoMovido=0;
@@ -36,7 +37,6 @@ public class App {
             }
         }
         boolean jogo=true;
-        int numJogadas=0;
         while(jogo){
             //Esse laço imprime os elementos das torres para visualizar o jogo
             for(int i=1;i<=quantDiscos;i++){
@@ -48,34 +48,59 @@ public class App {
             novaTorre=teclado.nextInt();
             switch (discoMovido) {
                 case 1:
-                    int disco1=torre1.pop();
+                    int disco1=torre1.top();
                     if(novaTorre==2){
-                        torre2.push(disco1);
+                        if(verificaJogada(torre2,disco1)){
+                            torre1.pop();
+                            torre2.push(disco1);
+                        }
                     }
                     else {
-                        torre3.push(disco1);
+                        if(verificaJogada(torre3,disco1)){
+                            torre1.pop();
+                            torre3.push(disco1);
+                        }
+                        
                     }
                     break;
                 case 2:
-                    int disco2=torre2.pop();
+                    int disco2=torre2.top();
                     if(novaTorre==1){
-                        torre1.push(disco2);
+                        if(verificaJogada(torre1,disco2)){
+                            torre2.pop();
+                            torre1.push(disco2);
+                        }
+                        
                     }
                     else {
-                        torre3.push(disco2);                        
+                        if(verificaJogada(torre3,disco2)){
+                            torre2.pop();
+                            torre3.push(disco2);
+                        }
+                                                
                     }
                     break;
                 case 3:
-                    int disco3=torre3.pop();   
+                    int disco3=torre3.top();   
                     if(novaTorre==2){
-                        torre2.push(disco3); 
+                        if(verificaJogada(torre2,disco3)){
+                            torre3.pop();
+                            torre2.push(disco3);
+                        }
+                         
                     }
                     else {
-                        torre1.push(disco3);
+                        if(verificaJogada(torre1,disco3)){
+                            torre3.pop();
+                            torre1.push(disco3);
+                        }
+                        
                     }
                     break;
             
                 default:
+                    System.out.println("Torre inválida!!");
+                    numJogadas--;
                     break;
             }
             numJogadas++;
@@ -101,6 +126,17 @@ public class App {
         System.out.print("\nParabéns, você resolveu em "+numJogadas+" movimentos\n");
         for(int i=1;i<=quantDiscos;i++){
             System.out.printf(torre1.elemento((quantDiscos-i))+"||"+torre2.elemento((quantDiscos-i))+"||"+torre3.elemento((quantDiscos-i))+"\n");
+        }
+        teclado.close();
+    }
+    public static boolean verificaJogada(MinhaPilha torreX, int discoX){
+        if(torreX.isEmpty()||torreX.top()>discoX){
+            return true;
+        }
+        else{
+            System.out.printf("Jogada Inválida!! Tente novamente\n");
+            numJogadas--;
+            return false;
         }
     }
 }

@@ -52,20 +52,7 @@ public class MinhaPilha {
     }
 
     //método criado para facilitar a representação das pilhas na atividade
-    //Talvez dê para ser implementado em outro local
-    public String hanoi(){
-        String hanoi ="";
-        for (int i=0;i<size();i++){
-            if(i!=size()-1){
-                hanoi+= " ".repeat(size()-i)+"["+"-".repeat(i)+pilha[i]+"-".repeat(i)+"]\n";
-            }
-            else{
-                hanoi+= " ".repeat(size()-i)+"["+"-".repeat(i)+pilha[i]+"-".repeat(i)+"]";
-            }
-        }
-        return hanoi;
-    }
-    //método criado para retornar o elemento em cada indice da pilha
+    //método criado para retornar o elemento em cada posição da pilha
     public int elemento(int indice){
         return pilha[indice];
     }
