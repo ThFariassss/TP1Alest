@@ -1,5 +1,7 @@
 import java.util.Scanner;
 class AutoAppV2{
+    //As pilhas ficaram armazenadas em Array pra facilitar o acesso a elas com base na sua posição (1,2 ou 3)
+    //Foi iniciada com 4 lugares pois o indice 0 nunca será acessado e os demais indices ficam iguais aos números das torres
     private static MinhaPilha [] lista=new MinhaPilha[4];
     private static int quantDiscos;
     private static Scanner teclado =new Scanner (System.in);
@@ -23,6 +25,7 @@ class AutoAppV2{
         System.out.println("Direita (1) - Meio (2) - Esquerda (3)");
         int torreInicial=teclado.nextInt();
         
+        //Preenche a pilha inicial
         for(int i=quantDiscos; i>=1; i--){
             switch(torreInicial){
                 case 1:
@@ -36,12 +39,17 @@ class AutoAppV2{
                     break;
             }
         }
+        //limpa o teclado
         teclado.nextLine();
+        //imprime as pilhas de forma a auxiliar no entendimento do jogo
         for(int i=1;i<=quantDiscos;i++){
             System.out.printf(lista[1].elemento((quantDiscos-i))+"||"+lista[2].elemento((quantDiscos-i))+"||"+lista[3].elemento((quantDiscos-i))+"\n");
         }
+        //Faz ter que apertar enter antes de passar para a próxima parte
         System.out.println("Aperte ENTER para começar");
         teclado.nextLine();
+
+        //Passa as torres para o método que fará a movimentação, variando conforme a torre inicial
         switch(torreInicial){
             case 1:
                 movimentacao(quantDiscos, 1, 2, 3);
@@ -53,9 +61,12 @@ class AutoAppV2{
                 movimentacao(quantDiscos, 3, 1, 2);
                 break;
         }
+        //Ao terminar o programa, fecha o teclado
         teclado.close();
     }
+    //método para realizar a movimentação de maneira recursiva
     public static void movimentacao(int numDiscosL, int torreA, int torreB, int torreC){
+        //condição de parada
         if(numDiscosL>0){
             movimentacao(numDiscosL-1, torreA, torreC, torreB);
             int disco = lista[torreA].pop();
