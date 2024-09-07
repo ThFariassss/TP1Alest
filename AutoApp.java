@@ -1,5 +1,5 @@
 import java.util.Scanner;
-class AutoAppV2{
+class AutoApp{
     //As pilhas ficaram armazenadas em Array pra facilitar o acesso a elas com base na sua posição (1,2 ou 3)
     //Foi iniciada com 4 lugares pois o indice 0 nunca será acessado e os demais indices ficam iguais aos números das torres
     private static MinhaPilha [] lista=new MinhaPilha[4];
