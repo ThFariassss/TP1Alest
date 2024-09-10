@@ -3,7 +3,7 @@
  */
 import java.util.Scanner;
 public class App {
-    private static int numJogadas=1;
+    private static int numJogadas=0;
     public static void main(String[] args) {
         Scanner teclado =new Scanner (System.in);
         int discoMovido=0;
