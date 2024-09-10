@@ -1,241 +1,85 @@
 import java.util.Scanner;
 class AutoApp{
-    public static void main(String[] args) {
-        Scanner teclado =new Scanner (System.in);
+    //As pilhas ficaram armazenadas em Array pra facilitar o acesso a elas com base na sua posição (1,2 ou 3)
+    //Foi iniciada com 4 lugares pois o indice 0 nunca será acessado e os demais indices ficam iguais aos números das torres
+    private static MinhaPilha [] lista=new MinhaPilha[4];
+    private static int quantDiscos;
+    private static Scanner teclado =new Scanner (System.in);
+    private static int numJogadas=0;
+    public static void main(String [] args){
         //Criação das torres em que os discos vão ser postos
         MinhaPilha torre1 = new MinhaPilha();
         MinhaPilha torre2 = new MinhaPilha();
         MinhaPilha torre3 = new MinhaPilha();
-        MinhaPilha [] lista={null,torre1,torre2,torre3};
+        
+        lista[1]=torre1;
+        lista[2]=torre2;
+        lista[3]=torre3;
+        
         //Definindo a quantidade de discos
         System.out.println("Com quantos discos você gostaria de jogar?");
-        int quantDiscos=teclado.nextInt();
-        double qD=quantDiscos;
-        //rodadas totais
-        double rodadas=Math.pow(2, qD);
-        int fim=0;
-
+        quantDiscos=teclado.nextInt();
+        
         //Definindo qual das torres vai ser a primeira
         System.out.println("Em qual torre você gostaria de começar a jogar?");
         System.out.println("Direita (1) - Meio (2) - Esquerda (3)");
         int torreInicial=teclado.nextInt();
         
-        //variaveis relacionadas ao menor disco
-        int torreMenorDisco=torreInicial;
-        int proxTorreMenorD=torreInicial+1;
-        boolean menorMoveu=false;
-
-        //demais variáveis que podem ser utilizadas
-        int segMenorT;
-        int maior;
-        //Preenchendo a torre inicial
+        //Preenche a pilha inicial
         for(int i=quantDiscos; i>=1; i--){
             switch(torreInicial){
                 case 1:
-                    torre1.push(i);
+                    lista[1].push(i);
                     break;
                 case 2:
-                    torre2.push(i);
+                    lista[2].push(i);
                     break;
                 case 3:
-                    torre3.push(i);
+                    lista[3].push(i);
                     break;
             }
         }
+        //limpa o teclado
         teclado.nextLine();
-        for(int r=0;r<rodadas;r++){
-            for(int i=1;i<=quantDiscos;i++){
-                System.out.printf(torre1.elemento((quantDiscos-i))+"||"+torre2.elemento((quantDiscos-i))+"||"+torre3.elemento((quantDiscos-i))+"\n");
-            }
-            System.out.println("Rodada "+r+"\nAperte ENTER para continuar");
-            teclado.nextLine();
-            if(menorMoveu){
-                
-                switch (localizaTorre(torre1, torre2, torre3, 1)) {
-                    case 1:
-                        segMenorT=achaSegundoMenor(torre2,torre3);
-                        maior=achaMaior(torre2, torre3);
-                        if(localizaTorre(torre1, torre2, torre3, segMenorT)==3){
-                            torre3.push(torre2.top());
-                            torre2.pop();
-                        }
-                        else{
-                            torre2.push(torre3.top());
-                            torre3.pop();
-                        }
-                        break;
-                    case 2:
-                        segMenorT=achaSegundoMenor(torre1,torre3);
-                        maior=achaMaior(torre1, torre3);
-                        if(localizaTorre(torre1, torre2, torre3, segMenorT)==3){
-                            torre1.push(torre3.top());
-                            torre3.pop();
-                        }
-                        else{
-                            torre3.push(torre1.top());
-                            torre1.pop();
-                        }
-                        break;
-                    case 3:
-                        segMenorT=achaSegundoMenor(torre2,torre1);
-                        maior=achaMaior(torre2, torre1);
-                        if(localizaTorre(torre1, torre2, torre3, segMenorT)==2){
-                            torre1.push(torre2.top());
-                            torre2.pop();
-                        }
-                        else{
-                            torre2.push(torre1.top());
-                            torre1.pop();
-                        }
-                        break;
-                
-                    default:
-                        break;
-                }
-                menorMoveu=false;
-            }
-            else{
-                switch (torreMenorDisco) {
-                    case 1:
-                        if(proxTorreMenorD==2){
-                            torre2.push(torre1.top());
-                            torre1.pop();
-                        }
-                        else{
-                            torre3.push(torre1.top());
-                            torre1.pop();
-                        }
-                        break;
-                        
-                    case 2:
-                        if(proxTorreMenorD==3){
-                            torre3.push(torre2.top());
-                            torre2.pop();
-                        }
-                        else{
-                            torre1.push(torre2.top());
-                            torre2.pop();
-                        }
-                        break;
-                        
-                    case 3:
-                        if(proxTorreMenorD==2){
-                            torre2.push(torre3.top());
-                            torre3.pop();
-                        }
-                        else{
-                            torre1.push(torre3.top());
-                            torre3.pop();
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                torreMenorDisco=proxTorreMenorD;
-                proxTorreMenorD++;
-                menorMoveu=true;
-                if(proxTorreMenorD>3){
-                    proxTorreMenorD=1;
-                }
-            }
-            fim=r;
-        }
-        System.out.println();
+        //imprime as pilhas de forma a auxiliar no entendimento do jogo
         for(int i=1;i<=quantDiscos;i++){
-            System.out.printf(torre1.elemento((quantDiscos-i))+"||"+torre2.elemento((quantDiscos-i))+"||"+torre3.elemento((quantDiscos-i))+"\n");
+            System.out.printf(lista[1].elemento((quantDiscos-i))+"||"+lista[2].elemento((quantDiscos-i))+"||"+lista[3].elemento((quantDiscos-i))+"\n");
         }
-        System.out.println(fim +" Jogadas");
+        //Faz ter que apertar enter antes de passar para a próxima parte
+        System.out.println("Aperte ENTER para começar");
+        teclado.nextLine();
+
+        //Passa as torres para o método que fará a movimentação, variando conforme a torre inicial
+        switch(torreInicial){
+            case 1:
+                movimentacao(quantDiscos, 1, 2, 3);
+                break;
+            case 2:
+                movimentacao(quantDiscos, 2, 3, 1);
+                break;
+            case 3:
+                movimentacao(quantDiscos, 3, 1, 2);
+                break;
+        }
+        //Ao terminar o programa, fecha o teclado
         teclado.close();
     }
-    public static int achaSegundoMenor(MinhaPilha torreA,MinhaPilha torreB){
-        int segundoMenor;
-        if(torreA.isEmpty()&&torreB.isEmpty()){
-            return torreA.top();
-        }
-        if(torreA.isEmpty()){
-            return torreB.top();
-        }
-        if(torreB.isEmpty()){
-            return torreA.top();
-        }
-        if(torreA.top()>torreB.top()){
-            segundoMenor=torreB.top();
-        }
-        else{
-            segundoMenor=torreA.top();
-        }
-        return segundoMenor;
-    }
-    public static int achaMaior(MinhaPilha torreA,MinhaPilha torreB){
-        int maior;
-        if(torreA.isEmpty()&&torreB.isEmpty()){
-            return 0;
-        }
-        if(torreA.isEmpty()){
-            return torreB.top();
-        }
-        if(torreB.isEmpty()){
-            return torreA.top();
-        }
-        if(torreA.top()>torreB.top()){
-            maior=torreA.top();
-        }
-        else{
-            maior=torreB.top();
-        }
-        return maior;
-    }
-    public static int localizaTorre(MinhaPilha torre1,MinhaPilha torre2,MinhaPilha torre3, int discoX){
-        if((torre1.isEmpty()==false)&&(torre2.isEmpty()==false)&&(torre3.isEmpty())){
-            if(torre1.top()==discoX){
-                return 1;
+    //método para realizar a movimentação de maneira recursiva
+    public static void movimentacao(int numDiscosL, int torreA, int torreB, int torreC){
+        //condição de parada
+        if(numDiscosL>0){
+            movimentacao(numDiscosL-1, torreA, torreC, torreB);
+            int disco = lista[torreA].pop();
+            lista[torreC].push(disco);
+            for(int i=1;i<=quantDiscos;i++){
+                System.out.printf(lista[1].elemento((quantDiscos-i))+"||"+lista[2].elemento((quantDiscos-i))+"||"+lista[3].elemento((quantDiscos-i))+"\n");
             }
-            else{
-                if(torre2.top()==discoX){
-                    return 2;
-                }
-                else{
-                    return 3;
-                }
-            }
+            numJogadas++;
+            System.out.println("Movimento "+numJogadas);
+            System.out.println("Mova a peça da torre "+torreA+" para a torre "+torreC);
+            System.out.println("Aperte ENTER para continuar");
+            teclado.nextLine();
+            movimentacao(numDiscosL-1, torreB, torreA, torreC);
         }
-        else{
-            if(torre1.isEmpty()){
-                if(torre2.isEmpty()){
-                    return 3;
-                }
-                else{
-                    if(torre2.top()==discoX){
-                        return 2;
-                    }
-                    else{
-                        return 3;
-                    }
-                }
-            }else{
-                if(torre2.isEmpty()){
-                    if(torre3.isEmpty()){
-                        return 1;
-                    }
-                    else{
-                        if(torre3.top()==discoX){
-                            return 3;
-                        }
-                        else{
-                            return 1;
-                        }
-                    }
-                }
-                else{
-                    if(torre2.top()==discoX){
-                        return 2;
-                    }
-                    else{
-                        return 1;
-                    }
-                }
-            }
-                }
     }
 }
-        
