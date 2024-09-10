@@ -19,7 +19,7 @@ public class App {
 
         //Definindo qual das torres vai ser a primeira
         System.out.println("Em qual torre você gostaria de começar a jogar?");
-        System.out.println("Direita (1) - Meio (2) - Esquerda (3)");
+        System.out.println("Esquerda (1) - Meio (2) - Direita (3)");
         int torreInicial=teclado.nextInt();
         
         //Preenchendo a torre inicial
