@@ -46,64 +46,69 @@ public class App {
             discoMovido=teclado.nextInt();
             System.out.printf("\nPara qual torre você quer mover o disco?\n");
             novaTorre=teclado.nextInt();
-            switch (discoMovido) {
-                case 1:
-                    int disco1=torre1.top();
-                    if(novaTorre==2){
-                        if(verificaJogada(torre2,disco1)){
-                            torre1.pop();
-                            torre2.push(disco1);
+                if(validaTorre(discoMovido, torre1, torre2, torre3)){
+                    switch (discoMovido) {
+                    case 1:
+                        int disco1=torre1.top();
+                        if(novaTorre==2){
+                            if(verificaJogada(torre2,disco1)){
+                                torre1.pop();
+                                torre2.push(disco1);
+                            }
                         }
-                    }
-                    else {
-                        if(verificaJogada(torre3,disco1)){
-                            torre1.pop();
-                            torre3.push(disco1);
+                        else {
+                            if(verificaJogada(torre3,disco1)){
+                                torre1.pop();
+                                torre3.push(disco1);
+                            }
+                            
                         }
-                        
-                    }
-                    break;
-                case 2:
-                    int disco2=torre2.top();
-                    if(novaTorre==1){
-                        if(verificaJogada(torre1,disco2)){
-                            torre2.pop();
-                            torre1.push(disco2);
+                        break;
+                    case 2:
+                        int disco2=torre2.top();
+                        if(novaTorre==1){
+                            if(verificaJogada(torre1,disco2)){
+                                torre2.pop();
+                                torre1.push(disco2);
+                            }
+                            
                         }
-                        
-                    }
-                    else {
-                        if(verificaJogada(torre3,disco2)){
-                            torre2.pop();
-                            torre3.push(disco2);
+                        else {
+                            if(verificaJogada(torre3,disco2)){
+                                torre2.pop();
+                                torre3.push(disco2);
+                            }
+                                                    
                         }
-                                                
-                    }
-                    break;
-                case 3:
-                    int disco3=torre3.top();   
-                    if(novaTorre==2){
-                        if(verificaJogada(torre2,disco3)){
-                            torre3.pop();
-                            torre2.push(disco3);
+                        break;
+                    case 3:
+                        int disco3=torre3.top();   
+                        if(novaTorre==2){
+                            if(verificaJogada(torre2,disco3)){
+                                torre3.pop();
+                                torre2.push(disco3);
+                            }
+                            
                         }
-                         
-                    }
-                    else {
-                        if(verificaJogada(torre1,disco3)){
-                            torre3.pop();
-                            torre1.push(disco3);
+                        else {
+                            if(verificaJogada(torre1,disco3)){
+                                torre3.pop();
+                                torre1.push(disco3);
+                            }
+                            
                         }
-                        
-                    }
-                    break;
-            
-                default:
-                    System.out.println("Torre inválida!!");
-                    numJogadas--;
-                    break;
+                        break;
+                
+                    default:
+                        System.out.println("Torre inválida!! Tente novamente");
+                        numJogadas--;
+                        break;
+                }
+                numJogadas++;
             }
-            numJogadas++;
+            else{
+                System.out.println("Torre escolhida é inválida!! Tente novamente");
+            }
             switch (torreInicial) {
                 case 1:
                     if(torre1.isEmpty()&&((torre2.size()==quantDiscos)||(torre3.size()==quantDiscos))){
@@ -137,6 +142,33 @@ public class App {
             System.out.printf("Jogada Inválida!! Tente novamente\n");
             numJogadas--;
             return false;
+        }
+    }
+    public static boolean validaTorre(int torreEscolhida, MinhaPilha torreA, MinhaPilha torreB, MinhaPilha torreC){
+        switch (torreEscolhida) {
+            case 1:
+                if(torreA.isEmpty()==false){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            case 2:
+                if(torreB.isEmpty()==false){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            case 3:
+                if(torreC.isEmpty()==false){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            default:
+                return false;
         }
     }
 }
